@@ -2,6 +2,6 @@ from django.shortcuts import render
 from .models import proyect
 
 # Create your views here.
-def portafolio(request):
+def noticias(request):
     proyects = proyect.objects.all()
-    return render(request, "portfolio/portafolio.html", {'proyects' : proyects})
+    return render(request, "portfolio/noticias.html", {'proyects' : proyects})

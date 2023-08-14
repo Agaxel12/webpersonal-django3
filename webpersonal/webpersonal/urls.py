@@ -24,8 +24,11 @@ from django.conf import settings
 urlpatterns = [
     path('', core_views.home, name ="home"),
     path('contact/', core_views.contact, name ="contact"),
-    path('portafolio/', portfolio_views.portafolio, name ="portafolio"),
+    path('noticias/', portfolio_views.noticias, name ="noticias"),
     path('admin/', admin.site.urls),
+    path('product/<int:product_id>/', core_views.product_detail, name='product_detail'),
+    path('confirmacion-compra/', core_views.confirmacion_compra, name='confirmacion_compra'),
+    path('all-products/', core_views.all_products, name='all_products')
 ]
 
 if settings.DEBUG:

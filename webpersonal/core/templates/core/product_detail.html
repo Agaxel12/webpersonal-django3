@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ product.title }} - Detalles{% endblock %}
+{% block background %}{% load static %}{% static 'core/img/home-bg.jpg' %}{% endblock %}
+{% block content %}
+<section class="seccion contenedor">
+    <h2>{{ product.title }}</h2>
+    <div class="detalle-producto">
+        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+        <div class="descripcion-producto">
+            <p>{{ product.description }}</p>
+            <p class="precio">${{ product.precio|floatformat:2 }}</p> <!-- Aplicar el filtro floatformat -->
+            <ul class="caracteristicas">
+                {% if product.memoria %}
+                <li>Memoria: {{ product.memoria }}</li>
+                {% endif %}
+                
+                {% if product.version %}
+                <li>Versión: {{ product.version }}</li>
+                {% endif %}
+                
+                {% if product.procesador %}
+                <li>Procesador: {{ product.procesador }}</li>
+                {% endif %}
+                
+                {% if product.bateria %}
+                <li>Batería: {{ product.bateria }}</li>
+                {% endif %}
+                
+                {% if product.camara %}
+                <li>Cámara: {{ product.camara }}</li>
+                {% endif %}
+            </ul>
+            
+        </div>
+        <div id="paypal-button-container"></div>
+    </div>
+</section>
+<script src="https://www.paypal.com/sdk/js?client-id=Ac8OTxf2tY41fczYMxJpn_nmSDxL3HWci0cs5xn4bvGPLNAcJ5J0QtzYULyGXp3YqL57FP33kX24Czk8&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: {{ product.precio }}
+                    }
+                }]
+            });
+        },
+        onApprove: function(data) {
+            // Aquí puedes mostrar una alerta para indicar que el pago se realizó con éxito
+            alert("Pago Exitoso");
+            
+            // También puedes redirigir a otra página o realizar otras acciones
+            // window.location.href = "url_de_redireccion";
+        },
+        oncancel: function(data) {
+            alert("Pago Cancelado");
+        }
+    }).render('#paypal-button-container');
+</script>
+{% endblock %}

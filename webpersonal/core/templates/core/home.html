@@ -5,11 +5,72 @@
 {% block background %}{% load static %}{% static 'core/img/home-bg.jpg' %}{% endblock %}
 
 {% block headers %} 
-<h1>Juan Pérez</h1>
-<span class="subheading">Ingeniero Industrial</span>
+<h1>FutureTech</h1>
+<span class="subheading">Lo mejor en productos electrónicos</span>
 {% endblock%}
 
 {% block content %} 
-    <h2>Home</h2>
-    <p>Mi pagina web</p> 
+<section class="seccion contenedor">
+    <h2>Lo mas vendido de la semana</h2>
+{{Product}}
+    <div class="contenedor-anuncios">
+        {% for Product in productos %}
+        <div class="anuncio">
+            <picture>
+                <source srcset="{{Product.image.url}}" type="image/webp">
+                <source srcset="{{Product.image.url}}" type="image/jpeg">
+                <img loading="lazy" src="{{Product.image.url}}" alt="anuncio">
+            </picture>
+
+            <div class="contenido-anuncio">
+                <h3>{{Product.title}}</h3>
+                <p>{{Product.description}}</p>
+                <p class="precio">${{ Product.precio}}</p>
+
+                <ul class="iconos-caracteristicas">
+                    {% if Product.memoria%}
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'core/img/disc.svg' %}" alt="icono wc">
+                        <p>{{Product.memoria}}</p>
+                    </li>
+                    {%endif%}
+                    {% if Product.version%}
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'core/img/windows.svg' %}" alt="icono estacionamiento">
+                        <p>{{Product.version}}</p>
+                    </li>
+                    {%endif%}
+                    {% if Product.procesador%}
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'core/img/chip.svg' %}" alt="icono habitaciones">
+                        <p>{{Product.procesador}}</p>
+                    </li>
+                    {%endif%}
+                    {% if Product.bateria%}
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'core/img/battery.svg' %}" alt="icono habitaciones">
+                        <p>{{Product.bateria}}</p>
+                    </li>
+                    {%endif%}
+                    {% if Product.camara%}
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'core/img/camera.svg' %}" alt="icono habitaciones">
+                        <p>{{Product.camara}}</p>
+                    </li>
+                    {%endif%}
+                </ul>
+
+                <a href="{% url 'product_detail' Product.id %}" class="boton-amarillo-block">
+                    Ver más información
+                </a>
+                
+            </div><!--.contenido-anuncio-->
+        </div><!--anuncio-->
+        {% endfor%}
+    </div> <!--.contenedor-anuncios-->
+
+    <div class="alinear-derecha">
+        <a href="{% url 'noticias' %}" class="boton-verde">Noticias</a>
+    </div>
+</section> 
 {% endblock %}

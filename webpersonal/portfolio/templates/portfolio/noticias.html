@@ -1,0 +1,51 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}Noticias{% endblock %}
+{% block background %}{% load static %}{% static 'core/img/contact-bg.jpg' %}{% endblock %}
+
+{% block headers %} 
+<h1>Noticias</h1>
+<span class="subheading"></span>
+{% endblock%}
+{% block content %} 
+<div class="contenedor seccion seccion-inferior">
+    <section class="blog">
+        <h3>Nuestro Blog</h3>
+        {% for proyect in proyects %}
+        <article class="entrada-blog">
+            <div class="imagen">
+                <picture>
+                    <source srcset="{{ proyect.image.url }}" type="image/webp">
+                    <source srcset="{{ proyect.image.url }}" type="image/jpeg">
+                    <img loading="lazy" src="{{ proyect.image.url }}" alt="Texto Entrada Blog">
+                </picture>
+            </div>
+
+            <div class="texto-entrada">
+                    <h4>{{ proyect.title }}</h4>
+                    <p class="informacion-meta">Escrito el: <span>{{ proyect.created }}</span></p>
+
+                    <p>
+                        {{ proyect.description }}
+                    </p>
+                    {% if proyect.url %}
+      <p><a href="{{ proyect.url }}" target="_blank">Más información</a></p>
+    {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+
+    <section class="testimoniales">
+        <h3>Testimoniales</h3>
+
+        <div class="testimonial">
+            <blockquote>
+               <p>La atencion fue excelente, los productos que se muestran soy muy diversos y con una comodidad a la hora de los pagos insitando a seguir comprando en el local.</p> 
+            </blockquote>
+            <p>- Bochi the Rock</p>
+        </div>
+    </section>
+</div>
+{% endblock %}
